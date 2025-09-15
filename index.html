@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Matemáticas Financieras</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .description {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .exercise-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-btn {
+            padding: 10px 18px;
+            background: linear-gradient(to bottom, var(--secondary-color), #2980b9);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to bottom, #2980b9, var(--secondary-color));
+        }
+        
+        .exercises-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px;
+        }
+        
+        .exercise {
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .exercise::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--secondary-color);
+        }
+        
+        .exercise:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .exercise-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .exercise-number {
+            background: linear-gradient(to bottom, var(--secondary-color), #2980b9);
+            color: white;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .exercise-content {
+            margin-bottom: 15px;
+        }
+        
+        .data {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .calculation {
+            background-color: #f8f9fa;
+            padding: 18px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 18px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .result {
+            font-weight: bold;
+            color: var(--success-color);
+            padding: 15px;
+            background-color: #f0fff4;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .math {
+            overflow-x: auto;
+            padding: 12px 0;
+            margin: 10px 0;
+        }
+        
+        .math mjx-container {
+            outline: none;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px;
+            color: var(--dark-color);
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .exercises-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .exercise-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        .print-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 12px 25px;
+            background: linear-gradient(to bottom, var(--accent-color), #c0392b);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ejercicios de Matemáticas Financieras</h1>
+        <p class="description">Resolución paso a paso de problemas de valor actual, valor futuro, anualidades y perpetuidades</p>
+    </header>
+    
+    <div class="container">
+        <div class="exercise-nav">
+            <button class="nav-btn" onclick="scrollToExercise(1)">Ejercicio 1</button>
+            <button class="nav-btn" onclick="scrollToExercise(2)">Ejercicio 2</button>
+            <button class="nav-btn" onclick="scrollToExercise(3)">Ejercicio 3</button>
+            <button class="nav-btn" onclick="scrollToExercise(4)">Ejercicio 4</button>
+            <button class="nav-btn" onclick="scrollToExercise(5)">Ejercicio 5</button>
+            <button class="nav-btn" onclick="scrollToExercise(6)">Ejercicio 6</button>
+            <button class="nav-btn" onclick="scrollToExercise(7)">Ejercicio 7</button>
+            <button class="nav-btn" onclick="scrollToExercise(8)">Ejercicio 8</button>
+            <button class="nav-btn" onclick="scrollToExercise(9)">Ejercicio 9</button>
+            <button class="nav-btn" onclick="scrollToExercise(10)">Ejercicio 10</button>
+            <button class="nav-btn" onclick="scrollToExercise(11)">Ejercicio 11</button>
+            <button class="nav-btn" onclick="scrollToExercise(12)">Ejercicio 12</button>
+            <button class="nav-btn" onclick="scrollToExercise(13)">Ejercicio 13</button>
+            <button class="nav-btn" onclick="scrollToExercise(14)">Ejercicio 14</button>
+            <button class="nav-btn" onclick="scrollToExercise(15)">Ejercicio 15</button>
+            <button class="nav-btn" onclick="scrollToExercise(16)">Ejercicio 16</button>
+            <button class="nav-btn" onclick="scrollToExercise(17)">Ejercicio 17</button>
+            <button class="nav-btn" onclick="scrollToExercise(18)">Ejercicio 18</button>
+            <button class="nav-btn" onclick="scrollToExercise(19)">Ejercicio 19</button>
+            <button class="nav-btn" onclick="scrollToExercise(20)">Ejercicio 20</button>
+        </div>
+        
+        <button class="print-btn" onclick="window.print()">Imprimir Ejercicios</button>
+        
+        <div class="exercises-container">
+            <!-- Ejercicio 1 -->
+            <div class="exercise" id="ex1">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor actual de un bono británico</h2>
+                    <div class="exercise-number">1</div>
+                </div>
+                <div class="exercise-content">
+                    <p>El valor actual de una <strong>perpetuidad</strong> (anualidad indefinida) se calcula dividiendo el flujo de caja anual por la tasa de interés.</p>
+                    <div class="math">
+                        $$VA = \frac{C}{i}$$
+                    </div>
+                    <div class="data">
+                        <p><strong>Datos:</strong> \(C = \$100,000\); \(i = 10\% = 0.10\)</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VA = \frac{\$100,000}{0.10} = \$1,000,000$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El valor actual del bono es de <strong>\$1,000,000</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 2 -->
+            <div class="exercise" id="ex2">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Renta para cubrir aumentos salariales</h2>
+                    <div class="exercise-number">2</div>
+                </div>
+                <div class="exercise-content">
+                    <p>Cuando una perpetuidad tiene un <strong>crecimiento constante</strong>, se usa la fórmula del Modelo de Gordon-Shapiro.</p>
+                    <div class="math">
+                        $$VA = \frac{C_1}{i - g}$$
+                    </div>
+                    <div class="data">
+                        <p><strong>Datos:</strong> \(C_1 = \$100,000\); \(i = 10\% = 0.10\); \(g = 4\% = 0.04\)</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VA = \frac{\$100,000}{0.10 - 0.04} = \frac{\$100,000}{0.06} = \$1,666,666.67$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El valor actual de la asignación es de <strong>\$1,666,666.67</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 3 -->
+            <div class="exercise" id="ex3">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor actual de $100 recibidos en el futuro</h2>
+                    <div class="exercise-number">3</div>
+                </div>
+                <div class="exercise-content">
+                    <p>El <strong>valor actual</strong> de un monto futuro se calcula descontándolo a la tasa de interés dada.</p>
+                    <div class="math">
+                        $$VA = \frac{VF}{(1 + i)^n}$$
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Año 10 a 1%:</strong> $$VA = \frac{\$100}{(1 + 0.01)^{10}} \approx \$90.53$$</p>
+                        <p><strong>Año 10 a 13%:</strong> $$VA = \frac{\$100}{(1 + 0.13)^{10}} \approx \$29.46$$</p>
+                        <p><strong>Año 15 a 25%:</strong> $$VA = \frac{\$100}{(1 + 0.25)^{15}} \approx \$3.52$$</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 4 -->
+            <div class="exercise" id="ex4">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor actual neto de la fábrica</h2>
+                    <div class="exercise-number">4</div>
+                </div>
+                <div class="exercise-content">
+                    <p>El <strong>Valor Actual Neto (VAN)</strong> se obtiene restando la inversión inicial del valor presente de los flujos de caja futuros.</p>
+                    <div class="data">
+                        <p><strong>Paso 1: Valor actual de los ingresos (perpetuidad)</strong></p>
+                    </div>
+                    <div class="calculation">
+                        <p>$$VA_{ingresos} = \frac{\$170,000}{0.14} = \$1,214,285.71$$</p>
+                    </div>
+                    <div class="data">
+                        <p><strong>Paso 2: Cálculo del VAN</strong></p>
+                    </div>
+                    <div class="calculation">
+                        <p>$$VAN = \$1,214,285.71 - \$800,000 = \$414,285.71$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El VAN de la fábrica es <strong>\$414,285.71</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 5 -->
+            <div class="exercise" id="ex5">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">¿Qué premio vale más?</h2>
+                    <div class="exercise-number">5</div>
+                </div>
+                <div class="exercise-content">
+                    <p>Para comparar los premios, calculamos el <strong>valor actual (VA)</strong> de cada uno usando la tasa de interés del 12%.</p>
+                    <div class="calculation">
+                        <p><strong>Opción 1:</strong> \$100,000 ahora. <strong>VA = \$100,000</strong>.</p>
+                        <p><strong>Opción 2:</strong> \$180,000 en 5 años. $$VA = \frac{\$180,000}{(1.12)^5} \approx \$102,136.98$$</p>
+                        <p><strong>Opción 3:</strong> \$11,400 anual para siempre. $$VA = \frac{\$11,400}{0.12} = \$95,000$$</p>
+                        <p><strong>Opción 4:</strong> \$19,000 anual por 10 años. $$VA = \$19,000 \times \frac{1 - (1.12)^{-10}}{0.12} \approx \$107,354.23$$</p>
+                    </div>
+                    <div class="result">
+                        <p>Comparando los valores, el premio con el mayor valor actual es la <strong>Opción 4</strong>, que vale <strong>\$107,354.23</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 6 -->
+            <div class="exercise" id="ex6">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">¿Cuántos dólares producen $0.507?</h2>
+                    <div class="exercise-number">6</div>
+                </div>
+                <div class="exercise-content">
+                    <p>Se busca el <strong>valor futuro (VF)</strong> de una inversión, usando la fórmula de interés compuesto.</p>
+                    <div class="math">
+                        $$VF = VA \times (1 + i)^n$$
+                    </div>
+                    <div class="data">
+                        <p><strong>Datos:</strong> \(VA = \$0.507\); \(i = 12\% = 0.12\); \(n = 6\) años.</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VF = \$0.507 \times (1.12)^6 \approx \$1.00$$</p>
+                    </div>
+                    <div class="result">
+                        <p><strong>\$0.507</strong> dólares producirán <strong>\$1.00</strong> en 6 años.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 7 -->
+            <div class="exercise" id="ex7">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Factor de actualización</h2>
+                    <div class="exercise-number">7</div>
+                </div>
+                <div class="exercise-content">
+                    <p>El <strong>factor de actualización</strong> (o factor de descuento) es el cociente entre el valor actual y el valor futuro.</p>
+                    <div class="math">
+                        $$\text{Factor de Actualización} = \frac{VA}{VF}$$
+                    </div>
+                    <div class="data">
+                        <p><strong>Datos:</strong> \(VA = \$125\); \(VF = \$139\)</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$\text{Factor de Actualización} = \frac{\$125}{\$139} \approx 0.8992$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El factor de actualización es <strong>0.8992</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 8 -->
+            <div class="exercise" id="ex8">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor actual con costo de capital</h2>
+                    <div class="exercise-number">8</div>
+                </div>
+                <div class="exercise-content">
+                    <p>Se calcula el valor actual de un monto futuro.</p>
+                    <div class="math">
+                        $$VA = \frac{VF}{(1 + i)^n}$$
+                    </div>
+                    <div class="data">
+                        <p><strong>Datos:</strong> \(VF = \$374\); \(i = 9\% = 0.09\); \(n = 9\) años.</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VA = \frac{\$374}{(1.09)^9} \approx \$172.20$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El valor actual es <strong>\$172.20</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 9 -->
+            <div class="exercise" id="ex9">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor actual de un proyecto</h2>
+                    <div class="exercise-number">9</div>
+                </div>
+                <div class="exercise-content">
+                    <p>Para calcular el valor actual de un proyecto, se suman los valores presentes de cada uno de los flujos de caja.</p>
+                    <div class="math">
+                        $$VA = \frac{C_1}{(1+i)^1} + \frac{C_2}{(1+i)^2}$$
+                    </div>
+                    <div class="data">
+                        <p><strong>Datos:</strong> \(C_1 = \$432\); \(C_2 = \$137\); \(i = 9\% = 0.09\)</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VA = \frac{\$432}{1.09} + \frac{\$137}{(1.09)^2} = \$396.33 + \$115.31 = \$511.64$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El valor actual del proyecto es <strong>\$511.64</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 10 -->
+            <div class="exercise" id="ex10">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">VAN de una inversión con renta perpetua</h2>
+                    <div class="exercise-number">10</div>
+                </div>
+                <div class="exercise-content">
+                    <p>El <strong>VAN</strong> se calcula como el valor presente de la renta perpetua menos la inversión inicial.</p>
+                    <div class="data">
+                        <p><strong>Paso 1: VA de la renta perpetua</strong></p>
+                    </div>
+                    <div class="calculation">
+                        <p>$$VA = \frac{\$138}{0.09} = \$1,533.33$$</p>
+                    </div>
+                    <div class="data">
+                        <p><strong>Paso 2: Cálculo del VAN</strong></p>
+                    </div>
+                    <div class="calculation">
+                        <p>$$VAN = \$1,533.33 - \$1,548.00 = -\$14.67$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El VAN de la inversión es <strong>-\$14.67</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 11 -->
+            <div class="exercise" id="ex11">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor actual de un dividendo creciente</h2>
+                    <div class="exercise-number">11</div>
+                </div>
+                <div class="exercise-content">
+                    <p>Se utiliza el <strong>Modelo de Gordon-Shapiro</strong> para una perpetuidad con crecimiento constante.</p>
+                    <div class="math">
+                        $$VA = \frac{D_1}{k - g}$$
+                    </div>
+                    <div class="data">
+                        <p><strong>Datos:</strong> \(D_1 = \$4\); \(k = 14\% = 0.14\); \(g = 4\% = 0.04\)</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VA = \frac{\$4}{0.14 - 0.04} = \frac{\$4}{0.10} = \$40$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El valor actual de los dividendos es <strong>\$40</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 12 -->
+            <div class="exercise" id="ex12">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Costo de la anualidad</h2>
+                    <div class="exercise-number">12</div>
+                </div>
+                <div class="exercise-content">
+                    <p>El costo de la anualidad es su <strong>valor actual</strong>. Usamos la fórmula de valor presente para una anualidad ordinaria.</p>
+                    <div class="math">
+                        $$VA = C \times \frac{1 - (1 + i)^{-n}}{i}$$
+                    </div>
+                    <div class="data">
+                        <p><strong>Datos:</strong> \(C = \$2,500\); \(n = 15\); \(i = 3\% = 0.03\)</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VA = \$2,500 \times \frac{1 - (1.03)^{-15}}{0.03} \approx \$29,844.86$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El costo de la anualidad es <strong>\$29,844.86</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 13 -->
+            <div class="exercise" id="ex13">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Viabilidad de un proyecto inmobiliario</h2>
+                    <div class="exercise-number">13</div>
+                </div>
+                <div class="exercise-content">
+                    <p>La viabilidad se determina calculando el <strong>Valor Actual Neto (VAN)</strong>. Un VAN positivo indica que el proyecto es viable.</p>
+                    <div class="data">
+                        <p><strong>Flujos de Caja:</strong></p>
+                        <ul>
+                            <li>Año 0: -$170,000</li>
+                            <li>Año 1: -$100,000</li>
+                            <li>Año 2: +$320,000</li>
+                        </ul>
+                    </div>
+                    <div class="math">
+                        $$VAN = CF_0 + \frac{CF_1}{(1+i)^1} + \frac{CF_2}{(1+i)^2}$$
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VAN = -\$170,000 + \frac{-\$100,000}{1.05} + \frac{\$320,000}{(1.05)^2} \approx \$25,011.33$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El VAN es positivo, por lo tanto, el proyecto <strong>es viable</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 14 -->
+            <div class="exercise" id="ex14">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor futuro y presente de una anualidad semestral</h2>
+                    <div class="exercise-number">14</div>
+                </div>
+                <div class="exercise-content">
+                    <p>Debemos ajustar la tasa de interés y los periodos a la <strong>frecuencia semestral</strong>.</p>
+                    <div class="data">
+                        <p><strong>Datos ajustados:</strong> \(C = \$5,000\); \(i = 8.6\%/2 = 4.3\%\); \(n = 7 \times 2 = 14\) semestres.</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Valor Futuro (VF):</strong> $$VF = \$5,000 \times \frac{(1.043)^{14} - 1}{0.043} \approx \$93,999.56$$</p>
+                        <p><strong>Valor Presente (VA):</strong> $$VA = \$5,000 \times \frac{1 - (1.043)^{-14}}{0.043} \approx \$51,980.20$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El valor futuro es <strong>\$93,999.56</strong> y el valor presente es <strong>\$51,980.20</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 15 -->
+            <div class="exercise" id="ex15">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor de contado de artículos de hogar</h2>
+                    <div class="exercise-number">15</div>
+                </div>
+                <div class="exercise-content">
+                    <p>El valor de contado es la suma de la cuota inicial y el valor presente de los pagos mensuales.</p>
+                    <div class="data">
+                        <p><strong>Datos ajustados:</strong> \(C = \$10,000\); \(i = 15\%/12 = 1.25\%\); \(n = 16\) meses.</p>
+                    </div>
+                    <div class="data">
+                        <p><strong>Paso 1: VA de los pagos:</strong></p>
+                    </div>
+                    <div class="calculation">
+                        <p>$$VA_{pagos} = \$10,000 \times \frac{1 - (1.0125)^{-16}}{0.0125} \approx \$144,184$$</p>
+                    </div>
+                    <div class="data">
+                        <p><strong>Paso 2: Valor de contado:</strong></p>
+                    </div>
+                    <div class="calculation">
+                        <p>$$\text{Valor de Contado} = \$100,000 + \$144,184 = \$244,184$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El valor de contado es <strong>\$244,184</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 16 -->
+            <div class="exercise" id="ex16">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Depósitos en cuenta de ahorros</h2>
+                    <div class="exercise-number">16</div>
+                </div>
+                <div class="exercise-content">
+                    <p>Como los depósitos son al inicio de cada año, es una <strong>anualidad anticipada</strong>.</p>
+                    <div class="math">
+                        $$VF = C \times \left[ \frac{(1 + i)^n - 1}{i} \right] \times (1 + i)$$
+                    </div>
+                    <div class="data">
+                        <p><strong>Datos:</strong> \(C = \$20,000\); \(i = 7\% = 0.07\); \(n = 5\) años.</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VF = \$20,000 \times \left[ \frac{(1.07)^5 - 1}{0.07} \right] \times (1.07) \approx \$123,065.54$$</p>
+                    </div>
+                    <div class="result">
+                        <p>Los depósitos ascenderán a <strong>\$123,065.54</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 17 -->
+            <div class="exercise" id="ex17">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor del alquiler anual</h2>
+                    <div class="exercise-number">17</div>
+                </div>
+                <div class="exercise-content">
+                    <p>El valor del alquiler anual es el <strong>valor presente</strong> de los 12 pagos mensuales.</p>
+                    <div class="data">
+                        <p><strong>Datos ajustados:</strong> \(C = \$4,000\); \(i = 12\%/12 = 1\%\); \(n = 12\) meses.</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VA = \$4,000 \times \frac{1 - (1.01)^{-12}}{0.01} \approx \$45,020.31$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El valor del alquiler anual es <strong>\$45,020.31</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 18 -->
+            <div class="exercise" id="ex18">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor futuro de alquileres</h2>
+                    <div class="exercise-number">18</div>
+                </div>
+                <div class="exercise-content">
+                    <p>Se busca el <strong>valor futuro</strong> de una anualidad ordinaria de depósitos trimestrales.</p>
+                    <div class="data">
+                        <p><strong>Datos ajustados:</strong> \(C = \$9,000\); \(i = 8\%/4 = 2\%\); \(n = 5 \times 4 = 20\) trimestres.</p>
+                    </div>
+                    <div class="calculation">
+                        <p><strong>Cálculo:</strong> $$VF = \$9,000 \times \frac{(1.02)^{20} - 1}{0.02} \approx \$218,676.60$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El valor futuro al final de los 5 años es <strong>\$218,676.60</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 19 -->
+            <div class="exercise" id="ex19">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Valor de Fondos de Inversión</h2>
+                    <div class="exercise-number">19</div>
+                </div>
+                <div class="exercise-content">
+                    <p>Se necesita encontrar el valor de los fondos al final del año 10, para lo cual primero debemos determinar los <strong>capitales iniciales</strong> (\(P_A\) y \(P_B\)).</p>
+                    <div class="data">
+                        <p><strong>Paso 1: Resolver el sistema de ecuaciones</strong></p>
+                        <ul>
+                            <li>\(P_A(1.03)^{20} + P_B(1.025)^{20} = \$10,000\)</li>
+                            <li>\(P_A(1.03)^{31} = 2 \times P_B(1.025)^{31}\)</li>
+                        </ul>
+                    </div>
+                    <div class="calculation">
+                        <p>De la segunda ecuación, se obtiene \(P_A \approx 1.717 \times P_B\).</p>
+                        <p>Sustituyendo en la primera ecuación, se encuentra que <strong>\(P_B \approx \$2,109.90\)</strong> y <strong>\(P_A \approx \$3,622.70\)</strong>.</p>
+                    </div>
+                    <div class="data">
+                        <p><strong>Paso 2: Calcular el valor en el año 10</strong></p>
+                    </div>
+                    <div class="calculation">
+                        <p>$$VF_{10} = \$3,622.70(1.03)^{10} + \$2,109.90(1.025)^{10} \approx \$4,868.79 + \$2,700.88 = \$7,569.67$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El valor final de los dos fondos al final del año 10 es <strong>\$7,569.67</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 20 -->
+            <div class="exercise" id="ex20">
+                <div class="exercise-header">
+                    <h2 class="exercise-title">Descuento por Pago de Contado</h2>
+                    <div class="exercise-number">20</div>
+                </div>
+                <div class="exercise-content">
+                    <p>El descuento "r" debe hacer que el <strong>valor presente</strong> de ambas opciones de pago sea el mismo para el negocio.</p>
+                    <div class="data">
+                        <p><strong>Paso 1: Valor Presente (VA) de cada opción</strong></p>
+                        <ul>
+                            <li><strong>VA Pago Contado:</strong> \(P(1-r)\) (es un pago inmediato).</li>
+                            <li><strong>VA Pago Tarjeta:</strong> \(\frac{0.97P}{(1+0.22)^{1.5/12}}\) (descontado 1.5 meses).</li>
+                        </ul>
+                    </div>
+                    <div class="data">
+                        <p><strong>Paso 2: Igualar los valores presentes</strong></p>
+                    </div>
+                    <div class="calculation">
+                        <p>$$P(1-r) = \frac{0.97P}{(1.22)^{0.125}}$$</p>
+                        <p>$$1-r = \frac{0.97}{1.02525} \approx 0.94611$$</p>
+                        <p>$$r = 1 - 0.94611 \approx 0.05389$$</p>
+                    </div>
+                    <div class="result">
+                        <p>El descuento "r" es de <strong>5.39%</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 Ejercicios de Matemáticas Financieras - Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        function scrollToExercise(number) {
+            const element = document.getElementById('ex' + number);
+            if (element) {
+                element.scrollIntoView({behavior: 'smooth'});
+                // Destacar temporalmente el ejercicio
+                element.style.backgroundColor = '#f8f9fa';
+                setTimeout(() => {
+                    element.style.backgroundColor = '';
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
